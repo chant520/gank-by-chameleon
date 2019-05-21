@@ -1,0 +1,138 @@
+<template>
+  <col class="content">
+    <view class="title">
+      <text class="title-name">干活集中营</text>
+      <text class="title-desc">
+        每日分享妹子图 和 技术干货，还有供大家中午休息的休闲视频
+      </text>
+      <view class="logo-content"><image src="{{gankLogo}}" class="logo-image"></image></view>
+    </view>
+    <col class="item">
+      <text class="menu-item" c-for="{{menus}}" c-for-item="pageInfo" c-bind:tap="onItemSelected(pageInfo.url)">{{pageInfo.title}}</text>   
+    </col>
+  </col>
+</template>
+
+<script>
+
+import cml from "chameleon-api"
+
+class Index  {
+  data = {
+    title: "chameleon",
+    chameleonSrc: require('../../assets/images/chameleon.png'),
+    gankLogo: require('../../assets/images/work.png'),
+    menus: [
+      {
+        icon: "",
+        title: '干货',
+        desc: '基础内容、表单组建、导航、视图容器等',
+        url: '/pages/gank-ganhuo/gank-ganhuo'
+      },
+      {
+        icon: "",
+        title: '福利',
+        desc: '基础内容、表单组建、导航、视图容器等',
+        url: '/pages/gank-fuli/gank-fuli'
+      },
+      {
+        icon: "",
+        title: '闲读',
+        desc: '基础内容、表单组建、导航、视图容器等',
+        url: '/pages/gank-xiandu/gank-xiandu'
+      }
+    ]
+  }
+
+  methods = {
+    onItemSelected(url) {
+      console.log('触发了事件',url)
+      cml.navigateTo({
+        path: url
+      });
+    }
+  }
+}
+
+export default new Index();
+
+</script>
+<style scoped>
+.content{
+  text-align:center;
+  justify-content: top;
+}
+.item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menu-item{
+  text-align: center;
+  font-size: 36cpx;
+  color: #666;
+  margin-top:20cpx;
+  margin-bottom:40cpx;
+}
+.title{
+  margin-top: 200cpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title-name{
+  font-size: 48cpx;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+.title-desc{
+  font-size: 32cpx;
+  text-align: center;
+  margin-top:20cpx;
+  margin-bottom:20cpx;
+  margin-right:20cpx;
+  margin-left:20cpx;
+  color: #000;
+}
+.logo-image{
+  height: 84cpx;
+  width: 300cpx;
+  margin-top:100cpx;
+  margin-bottom:100cpx;
+  margin-right:auto;
+  margin-left:auto;
+}
+
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "gank-reading-list": "/components/gank-reading-list/gank-reading-list"
+    }
+  },
+  "wx": {
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+  },
+  "alipay": {
+    "defaultTitle": "index",
+    "pullRefresh": false,
+    "allowsBounceVertical": "YES",
+    "titleBarColor": "#ffffff"
+  },
+  "baidu": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "index",
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 50
+  }
+}
+</script>

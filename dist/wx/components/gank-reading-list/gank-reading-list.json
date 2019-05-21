@@ -1,0 +1,6 @@
+{
+    "usingComponents": {
+        "cml-buildin-list": "./../../npm/chameleon-ui-builtin/components/list/list"
+    },
+    "component": true
+}

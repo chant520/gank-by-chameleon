@@ -1,0 +1,77 @@
+<template>
+  <page title="闲读">
+    <text class="title">闲读</text>
+    <text class="desc">读那些值得读的</text>
+    <gank-reading-cate c-bind:child2parentcate="handleParentCate"></gank-reading-cate>
+    <gank-reading-list parent-cate-id-props="{{cateId}}"></gank-reading-list>
+  </page>
+</template>
+
+<script>
+
+class GankXiandu   {
+
+  data = {
+    cateId: ""
+  }
+
+  computed = {
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    handleParentCate(args){
+      this.cateId = args.detail.cate_id
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new GankXiandu();
+</script>
+
+<style scoped>
+.desc{
+  font-size: 28cpx;
+  color: #747474;
+  margin-bottom: 36cpx;
+  text-align: center;
+}
+.title{
+  font-size: 48cpx;
+  margin: 48cpx 0 30cpx;
+  text-align: center;
+  color: #000000;
+}
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "gank-reading-cate": "/components/gank-reading-cate/gank-reading-cate",
+      "gank-reading-list": "/components/gank-reading-list/gank-reading-list"
+    }
+  }
+}
+</script>

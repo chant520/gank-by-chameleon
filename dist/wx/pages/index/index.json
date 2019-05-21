@@ -1,0 +1,9 @@
+{
+    "usingComponents": {
+        "gank-reading-list": "./../../components/gank-reading-list/gank-reading-list",
+        "cml-buildin-page": "./../../npm/chameleon-ui-builtin/components/page/page"
+    },
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+}

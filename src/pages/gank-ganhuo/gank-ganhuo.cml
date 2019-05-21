@@ -1,0 +1,200 @@
+<template>  
+<page title="页面标题" c-bind:back="goback">
+  <scroller
+    class="cate-scroll"
+    height="{{42}}"
+    scroll-direction="horizontal"
+    width="{{-1}}"
+  >
+    <view
+      class="cate-item"
+      c-for="{{categories}}"
+      c-for-index="i"
+      c-for-item="category"
+      c-bind:tap="changeCate"
+      data-catename="{{category}}"
+    >
+      <text class="cate-item-text">{{category}}</text>
+    </view>
+  </scroller>
+  <list
+    class="cate-list"
+    height="{{1200}}"
+  >
+    <cell
+      c-for="{{cateList}}"
+      c-for-item="item"
+    >
+      <view class="cell">
+        <view class="title">
+          <text class="title-text">{{item.desc}}</text>
+        </view>
+        <block c-if="{{ item.hasOwnProperty('images') > 0 }}">
+          <view class="image">
+            <image c-for="{{item.images}}" c-for-item="image" src="{{image}}" referrer="no-referrer"></image>
+          </view>
+        </block>
+        <view class="who">
+          <text>{{item.who}}</text>
+        </view>
+      </view>
+    </cell>
+  </list>
+</page>
+  
+</template>
+
+<script>
+
+import cml from "chameleon-api"
+
+class GankGanhuo   {
+
+  data = {
+    title: "今日干货",
+    activeCate: "",
+    lists: [],
+    categories: [],
+    // cateList : []
+  }
+
+  computed = {
+    cateList: function () {
+      if(this.activeCate.length > 0 ){
+        return this.lists[this.activeCate]
+      }
+    }
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    getLists(date){
+      cml.get({
+        url: "/"+ date,
+        setting: {
+          credentials: "omit"
+        }
+      }).then(
+        res => {
+          this.categories.push(...res.category)
+          this.lists = res.results
+          this.activeCate = res.category[0]
+        },
+        error => {
+          console.log('error:'+error)
+        }
+      )
+    },
+    changeCate(e) {
+      this.activeCate = e.currentTarget.dataset.catename
+      let tempList = this.lists
+      this.cateList = tempList[this.activeCate]
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+    let result = this.getLists('today')
+    console.log(result)
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new GankGanhuo();
+</script>
+
+<style scoped>
+.image{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 20cpx;
+  margin-bottom: 20cpx;
+}
+.image img:only-child{
+  max-height: 240cpx;
+}
+.image img:nth-last-child(2),
+.image img:nth-last-child(2) ~ img,
+.image img:nth-last-child(3),
+.image img:nth-last-child(3) ~ img,
+.image img:nth-last-child(4),
+.image img:nth-last-child(4) ~ img,
+.image img:nth-last-child(5),
+.image img:nth-last-child(5) ~ img,
+.image img:nth-last-child(6),
+.image img:nth-last-child(6) ~ img,
+.image img:nth-last-child(7),
+.image img:nth-last-child(7) ~ img,
+.image img:nth-last-child(8),
+.image img:nth-last-child(8) ~ img,
+.image img:nth-last-child(9),
+.image img:nth-last-child(9) ~ img{
+  width: 180cpx;
+  height: 180cpx;
+  margin-right: 20cpx;
+  margin-bottom: 20cpx;
+}
+.title{
+  margin-bottom: 20cpx;
+}
+.title-text{
+  font-size: 28cpx;
+  color: #625c5c;
+}
+.cate-list{
+  margin-top:25cpx;
+}
+.cell{
+  box-shadow: 1cpx 1cpx 10cpx #ccc;
+  background: #fff;
+  border-radius: 20cpx;
+  margin-bottom: 15cpx;
+  margin-top: 10cpx;
+  margin-right: 5cpx;
+  margin-left: 5cpx;
+  padding: 16cpx 20cpx 20cpx;
+}
+.cate-scroll{
+  box-shadow: 0 1cpx 5cpx #ccc;
+  background: #fff;
+  position: relative;
+  left: -20cpx;
+}
+.cate-item-text{
+  text-align: center;
+  font-size: 28cpx;
+  color: #6a2b2b;
+  line-height: 42cpx;
+}
+.cate-item{
+  margin-top: 25cpx;
+  margin-bottom: 10cpx;
+  margin-left: 5cpx;
+  margin-right: 5cpx;
+  min-width: 150cpx;
+}
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>

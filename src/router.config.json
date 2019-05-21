@@ -1,0 +1,24 @@
+{
+  "mode": "history",
+  "domain": "https://www.chameleon.com",
+  "routes":[
+    {
+      "url": "/cml/h5/index",
+      "path": "/pages/index/index",
+      "name": "index",
+      "mock": "index.php"
+    },
+    {
+      "url": "/cml/h5/gank-xiandu",
+      "path": "/pages/gank-xiandu/gank-xiandu",
+      "name": "xiandu",
+      "mock": "index.php"
+    },
+    {
+      "url": "/cml/h5/gank-ganhuo",
+      "path": "/pages/gank-ganhuo/gank-ganhuo",
+      "name": "ganhuo",
+      "mock": "index.php"
+    }
+  ]
+}

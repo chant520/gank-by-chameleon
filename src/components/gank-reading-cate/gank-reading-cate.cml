@@ -1,0 +1,147 @@
+<template>
+  <view>
+    <view class="cate-content">
+      <view class="cate-list"
+        c-for="{{cateList}}"
+        c-for-item="item"
+        data-idx="item.en_name"
+      >
+        <view class="cate-item">{{item.name}}</view>
+      </view>
+    </view>
+    <view class="cate-content">
+      <view class="blog-list"
+        c-for="{{blogList}}"
+        c-for-item="item2"
+        data-idx="{{item2.id}}"
+      >
+        <image src="{{item2.icon}}" style="width: 100%"></image>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+
+import cml from 'chameleon-api'
+
+class GankReadingCate {
+
+  data = {
+    cate_id: '',
+    cateList: [],
+    blogList: []
+  }
+
+  computed = {
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    setParentCompCate(cate_id) {
+      this.$emit('child2parentcate',{
+        cate_id: cate_id
+      })
+    },
+    getCateList() {
+      cml.get({
+        url: "/xiandu/categories",
+        setting: {
+          credentials: 'omit'
+        }
+      }).then(
+        res => {
+          if(res.error){
+
+          }else{
+            this.cateList = res.results;
+            this.getBlogList(res.results[0].en_name)
+          }
+        },
+        err => {
+          console.log("error:",err)
+        }
+      )
+    },
+    getBlogList(p_cate){
+      cml.get({
+        url: "/xiandu/category/"+p_cate,
+        setting: {
+          credentials: 'omit'
+        }
+      }).then(
+        res => {
+          if(res.error){
+
+          }else{
+            this.blogList = res.results
+            this.$cmlEmit('child2parentcate',{
+              cate_id: res.results[0].id
+            })
+          }
+        },
+        err => {
+          console.log("error:",err)
+        }
+      )
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+    this.getCateList();
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new GankReadingCate();
+</script>
+<style scoped>
+.blog-list{
+  width: 50cpx;
+  height: 50cpx;
+  border-radius: 50%;
+  box-shadow: 1cpx 1cpx 20cpx #ccc;
+  overflow: hidden;
+  margin: 10cpx 15cpx;
+}
+.cate-content{
+  display: flex;
+  flex-direction: row; 
+  justify-content: left;
+  flex-wrap: wrap;
+  margin-bottom: 40cpx;
+}
+.cate-list{
+
+}
+.cate-item{
+  border: 1cpx #eee solid;
+  font-size: 24cpx;
+  padding: 18cpx;
+  margin: 5cpx;
+  color: #545964;
+}
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>

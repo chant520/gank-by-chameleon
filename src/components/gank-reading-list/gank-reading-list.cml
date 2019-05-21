@@ -1,0 +1,141 @@
+<template>
+  <view class="container">
+    <row
+      class="cell"
+      c-for="{{lists}}"
+      c-for-index="i"
+      c-for-item="item"
+      c-bind:tap="change"
+      data-idx="{{i}}"
+      height="{{0}}"
+    >
+        <view class="panel">
+          <image src="{{item.cover}}"></image>
+          <text class="title">{{item.title}}</text>
+        </view>
+    </row>
+
+  </view>
+</template>
+
+<script>
+
+import cml from 'chameleon-api'
+
+const LOADMORE_COUNT = 4
+
+class GankReadingList {
+
+  data = {
+    scrollDirection: 'vertical',
+    bottomOffset: 20,
+    limit: 20,
+    page: 1,
+    cateId: this.parentCateIdProp,
+    lists: [],
+    panels: [
+    ],
+  }
+
+  props = {
+    parentCateIdProp:""
+  }
+
+  computed = {
+
+  }
+
+  watch  = {
+    parentCateId: function () {
+      this.lists = []
+      this.geGankList()
+    }
+  }
+
+  methods = {
+    onBottom(e) {
+      cml.showToast({
+        message: "loadmore",
+        duration: 1000
+      });
+
+      setTimeout(() => {
+        this.geGankList()
+      }, 800)
+    },
+    onScroll(e) {
+    },
+    geGankList() {
+      cml.get({
+        url: '/xiandu/data/id/'+this.parentCateIdProp+'/count/'+this.limit+'/page/'+this.page,
+        setting: {
+          credentials: 'omit'
+        }
+      })
+      .then(res => {
+        if(res.error){
+          cml.showToast({
+              message: "获取失败",
+              duration: 1000
+          })
+        }else{
+          this.lists.push(...res.results)
+          this.page = this.page+1
+        }
+      }, 
+      err => {
+        cml.showToast({
+          message: JSON.stringify(err),
+          duration: 2000
+        })
+      });
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+    console.log('created')
+    // this.geGankList()
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+    console.log('mounted')
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new GankReadingList();
+</script>
+<style scoped>
+.title{
+  font-size: 28cpx;
+  margin:20cpx;
+}
+.panel{
+  border-radius: 20cpx;
+  margin-bottom:28cpx;
+  overflow: hidden;
+  box-shadow: 1cpx 1cpx 20cpx #ccc;
+}
+.panel img{
+  max-height: 600cpx;
+  
+}
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>

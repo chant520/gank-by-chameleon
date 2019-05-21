@@ -1,0 +1,9 @@
+<view class="gank-list-content  cml-base cml-view">
+  <cml-buildin-list bottom-offset="{{bottomOffset}}" bindscrolltobottom="_cmlEventProxy" data-eventscrolltobottom="onBottom" bindonscroll="_cmlEventProxy" data-eventonscroll="onScroll" height="{{-1}}" class=" cml-base cml-list">
+      <view class="gank-list-cell  cml-base cml-cell" s-for="lists" s-for-index="i" s-for-item="item" data-idx="{{i}}">
+        <view class="panel  cml-base cml-view">
+          <text class="text  cml-base cml-text">{{item}}</text>
+        </view>
+      </view>
+  </cml-buildin-list>
+</view>
